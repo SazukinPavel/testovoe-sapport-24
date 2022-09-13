@@ -7,9 +7,20 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 export default {
   name: "CurrencyView",
-  components: {},
+  mounted() {
+    this.fetchCurrency();
+    console.log(this.currency);
+  },
+  computed: {
+    ...mapGetters(["currency"]),
+  },
+  methods: {
+    ...mapActions(["fetchCurrency"]),
+  },
 };
 </script>
 

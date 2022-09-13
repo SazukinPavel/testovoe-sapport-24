@@ -1,3 +1,3 @@
-const currencyState = () => {};
+const currencyState = () => ({ currency: [] });
 
 export default currencyState;

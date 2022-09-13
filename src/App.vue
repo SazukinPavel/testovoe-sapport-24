@@ -10,5 +10,3 @@ export default {
   components: { MainLayout },
 };
 </script>
-
-<style lang="scss"></style>

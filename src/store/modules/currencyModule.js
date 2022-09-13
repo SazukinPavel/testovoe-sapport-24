@@ -7,7 +7,7 @@ const currencyModule = {
   state: currencyState,
   actions: currencyActions,
   getters: currencyGetters,
-  muttations: currencyMutations,
+  mutations: currencyMutations,
 };
 
 export default currencyModule;
