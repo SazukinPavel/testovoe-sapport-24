@@ -2,18 +2,20 @@
   <a-grid align="middle" justify="center">
     <div class="content">
       <a-typography-title>Currency</a-typography-title>
+      <currency-table :currencies="this.currency ?? []"></currency-table>
     </div>
   </a-grid>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import CurrencyTable from "@/components/CurrencyTable";
 
 export default {
   name: "CurrencyView",
+  components: { CurrencyTable },
   mounted() {
     this.fetchCurrency();
-    console.log(this.currency);
   },
   computed: {
     ...mapGetters(["currency"]),

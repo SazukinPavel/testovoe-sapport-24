@@ -3,21 +3,25 @@ export default class LocalStorageService {
     currency: "currency",
   };
 
-  static setCurrency(arrayOfCurrency) {
+  static setCurrencyCode(arrayOfCurrency) {
     localStorage.setItem(this.#keys.currency, JSON.stringify(arrayOfCurrency));
   }
 
-  static getCurrency() {
+  static #getDefaultsCodes() {
+    return [431, 451, 190, 188, 224];
+  }
+
+  static getCurrencyCodes() {
     const currency = localStorage.getItem(this.#keys.currency);
     if (currency) {
       return JSON.parse(currency);
     } else {
-      this.setDefaultCurrency();
-      return [431, 451, 190, 188, 224];
+      this.setDefaultCurrencyCodes();
+      return this.#getDefaultsCodes();
     }
   }
 
-  static setDefaultCurrency() {
-    this.setCurrency([431, 451, 190, 188, 224]);
+  static setDefaultCurrencyCodes() {
+    this.setCurrencyCode(this.#getDefaultsCodes());
   }
 }
