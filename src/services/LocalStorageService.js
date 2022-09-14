@@ -8,7 +8,7 @@ export default class LocalStorageService {
   }
 
   static #getDefaultsCodes() {
-    return [431, 451, 190, 188, 224];
+    return [431, 451, 456, 371, 463];
   }
 
   static getCurrencyCodes() {

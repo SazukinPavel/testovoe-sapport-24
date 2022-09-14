@@ -4,8 +4,13 @@ export default class CurrencyService {
   static #currencyInfoUrl = "exrates/currencies/";
   static #currencyPriceUrl = "exrates/rates/";
 
-  static getCurrencyInfo(code) {
-    return api.get(this.#currencyInfoUrl + code);
+  static async getCurrencyInfo(code) {
+    try {
+      const response = await api.get(this.#currencyInfoUrl + code);
+      return response;
+    } catch (e) {
+      return undefined;
+    }
   }
 
   static async getCurrencyPrice(code) {
@@ -20,10 +25,10 @@ export default class CurrencyService {
   static #constructCurrencyObject(price, info) {
     return {
       abbreviation: info?.Cur_Abbreviation,
-      name: info.Cur_Name,
-      code: info.Cur_Code,
+      name: info?.Cur_Name,
+      code: info?.Cur_ID,
       price: price?.Cur_OfficialRate,
-      scale: info.Cur_Scale,
+      scale: info?.Cur_Scale,
     };
   }
 
@@ -38,6 +43,12 @@ export default class CurrencyService {
     return currencyObjects;
   }
 
+  static #constructCurrencyInfos(currencies) {
+    return currencies.map((c) => {
+      return { name: c.Cur_Name, code: c.Cur_ID };
+    });
+  }
+
   static getManyCurrencyInfo(arrayOfCodes) {
     return Promise.all(arrayOfCodes.map((code) => this.getCurrencyInfo(code)));
   }
@@ -46,9 +57,23 @@ export default class CurrencyService {
     return Promise.all(arrayOfCodes.map((code) => this.getCurrencyPrice(code)));
   }
 
-  static async getFullCurrency(arrayOfCodes) {
+  static async getFullCurrencies(arrayOfCodes) {
     const prices = this.getManyCurrencyPrice(arrayOfCodes);
     const infos = this.getManyCurrencyInfo(arrayOfCodes);
     return this.#constructCurrencyObjects(await prices, await infos);
+  }
+
+  static async getFullCurrency(code) {
+    const price = this.getCurrencyPrice(code);
+    const info = this.getCurrencyInfo(code);
+    return this.#constructCurrencyObject(
+      (await price)?.data ?? undefined,
+      (await info).data
+    );
+  }
+
+  static async fetchAllCurrenciesInfo() {
+    const currencies = await api.get(this.#currencyInfoUrl);
+    return this.#constructCurrencyInfos(currencies.data);
   }
 }

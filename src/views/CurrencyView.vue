@@ -1,8 +1,9 @@
 <template>
   <a-grid align="middle" justify="center">
     <div class="content">
-      <a-typography-title>Currency</a-typography-title>
-      <currency-table :currencies="this.currency ?? []"></currency-table>
+      <a-typography-title>Курсы валют:</a-typography-title>
+      <currency-table :currencies="this.currency ?? []" />
+      <add-curency />
     </div>
   </a-grid>
 </template>
@@ -10,10 +11,11 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import CurrencyTable from "@/components/CurrencyTable";
+import AddCurency from "@/components/AddCurency";
 
 export default {
   name: "CurrencyView",
-  components: { CurrencyTable },
+  components: { AddCurency, CurrencyTable },
   mounted() {
     this.fetchCurrency();
   },
@@ -26,10 +28,17 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .content {
-  width: 40vw;
-  margin: 2rem auto auto;
+  width: 50vw;
+  margin: 2rem auto;
   border: 0.3rem solid #cacaca;
+
+  @media (min-width: 300px) and (max-width: 768px) {
+    min-width: 160vw;
+  }
+  @media (min-width: 800px) and (max-width: 1200px) {
+    min-width: 120vw;
+  }
 }
 </style>

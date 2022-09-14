@@ -17,12 +17,26 @@ export default {
 .layout {
   color: white;
   font-size: 25px;
-  background-color: #ffffff;
   min-width: 100vw;
   min-height: 100vh;
+  background-color: #ffffff;
+  @media (min-width: 300px) and (max-width: 768px) {
+    min-width: 200vw;
+  }
+  @media (min-width: 800px) and (max-width: 1200px) {
+    min-width: 160vw;
+  }
+
   .header {
+    min-width: 100%;
     background-color: #cacaca;
     padding: 1rem;
+    @media (min-width: 300px) and (max-width: 768px) {
+      min-width: 200vw;
+    }
+    @media (min-width: 800px) and (max-width: 1200px) {
+      min-width: 160vw;
+    }
   }
 }
 </style>
